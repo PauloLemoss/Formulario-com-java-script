@@ -1,45 +1,43 @@
-const form = document.querySelector('.preencher-informacoes');
+const formulario = document.querySelector('.preencher-informacoes');
 const inputs = document.querySelectorAll('.input-text');
-const button = document.querySelector('.button');
-const errorMessages = document.querySelectorAll('.paragrafo-mostrar');
+const botao = document.querySelector('.button');
+const mensagensErro = document.querySelectorAll('.paragrafo-mostrar');
 
-function validateField(input, errorMessage) {
+function validarCampo(input, mensagemErro) {
     if (input.value.trim() === '') {
         input.classList.add('borda-vermelha');
         input.classList.remove('borda-verde');
-        errorMessage.style.display = 'block';
+        mensagemErro.style.display = 'block';
         return false;
     } else {
         input.classList.remove('borda-vermelha');
         input.classList.add('borda-verde');
-        errorMessage.style.display = 'none';
+        mensagemErro.style.display = 'none';
         return true;
     }
 }
 
-
 inputs.forEach((input, index) => {
     input.addEventListener('input', () => {
-        validateField(input, errorMessages[index]);
+        validarCampo(input, mensagensErro[index]);
     });
 });
 
-
-button.addEventListener('click', function (event) {
+botao.addEventListener('click', function (event) {
     event.preventDefault();
 
-    let formIsValid = true;
+    let formularioValido = true;
 
     inputs.forEach((input, index) => {
-        const isValid = validateField(input, errorMessages[index]);
-        if (!isValid) {
-            formIsValid = false;
+        const campoValido = validarCampo(input, mensagensErro[index]);
+        if (!campoValido) {
+            formularioValido = false;
         }
     });
 
-    if (formIsValid) {
+    if (formularioValido) {
         alert('Formulário enviado com sucesso!');
-        form.reset();
+        formulario.reset();
         inputs.forEach(input => input.classList.remove('borda-verde'));
     }
 });
